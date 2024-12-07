@@ -1,0 +1,16 @@
+#Task 2
+#E
+#Burning Midnight Oil
+def solve(n, k):
+    v = 1
+    while True:
+        total = 0
+        current = v
+        while current > 0:
+            total += current
+            current //= k
+        if total >= n:
+            return v
+        v += 1
+n, k = map(int, input().split())
+print(solve(n, k))
