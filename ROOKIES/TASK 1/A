@@ -1,0 +1,24 @@
+def minimum_swaps(n, heights):
+    max_height = heights[0]
+    min_height = heights[0]
+    tallest_index = 0
+    shortest_index = 0
+    
+    for i in range(n):
+        if heights[i] > max_height:
+            max_height = heights[i]
+            tallest_index = i
+        if heights[i] <= min_height:
+            min_height = heights[i]
+            shortest_index = i
+    
+    swaps = tallest_index + (n - 1 - shortest_index)
+    
+    if tallest_index > shortest_index:
+        swaps -= 1
+    
+    return swaps
+
+n = int(input())
+heights = list(map(int, input().split()))
+print(minimum_swaps(n, heights))
