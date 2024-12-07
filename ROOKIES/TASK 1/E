@@ -1,0 +1,24 @@
+#Task 1
+##E
+#keyboard
+def find_original_message(direction, typed_message):
+    keyboard = [
+        "qwertyuiop",
+        "asdfghjkl;",
+        "zxcvbnm,./"
+    ]
+    shift_map = {}
+    
+    for row in keyboard:
+        for i in range(len(row)):
+            if i > 0:
+                shift_map[row[i]] = row[i - 1]  
+            if i < len(row) - 1:
+                shift_map[row[i]] = row[i + 1]  
+    if direction == 'L':
+        return ''.join(shift_map[char] for char in typed_message)
+    else:
+        return ''.join(shift_map[char] for char in typed_message)
+direction = input()
+typed_message = input()
+print(find_original_message(direction, typed_message))
