@@ -1,0 +1,16 @@
+#Task2 
+#C
+#Cellular Network
+def find_min_r(n, m, cities, towers):
+    r = 0
+    j = 0
+    for city in cities:
+        while j < m - 1 and abs(towers[j + 1] - city) <= abs(towers[j] - city):
+            j += 1
+        r = max(r, abs(towers[j] - city))
+    
+    return r
+n, m = map(int, input().split())
+cities = list(map(int, input().split()))
+towers = list(map(int, input().split()))
+print(find_min_r(n, m, cities, towers))
