@@ -1,0 +1,16 @@
+#Task 1 
+#D
+#Lunch of collider
+def find_collision_time(particle_count, movement_directions, particle_positions):
+    earliest_time = float('inf')
+    
+    for index in range(particle_count - 1):
+        if movement_directions[index] == 'R' and movement_directions[index + 1] == 'L':
+            collision_time = (particle_positions[index + 1] - particle_positions[index]) // 2
+            earliest_time = min(earliest_time, collision_time)
+    
+    return earliest_time if earliest_time != float('inf') else -1
+particle_count = int(input())
+movement_directions = input().strip()
+particle_positions = list(map(int, input().split()))
+print(find_collision_time(particle_count, movement_directions, particle_positions
