@@ -1,0 +1,25 @@
+#C
+#Alice,bob and chocolate 
+def distribute_chocolates(n, times):
+    i, j = 0, n - 1
+    alice_time, bob_time = 0, 0
+    alice_bars, bob_bars = 0, 0
+
+    while i <= j:
+        if alice_time <= bob_time:
+            alice_time += times[i]
+            alice_bars += 1
+            i += 1
+        else:
+            bob_time += times[j]
+            bob_bars += 1
+            j -= 1
+
+    return alice_bars, bob_bars
+
+
+n = int(input())
+times = list(map(int, input().split()))
+
+alice, bob = distribute_chocolates(n, times)
+print(alice, bob)
