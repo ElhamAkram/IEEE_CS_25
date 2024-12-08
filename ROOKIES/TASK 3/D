@@ -1,0 +1,18 @@
+#D
+#Balanced team
+def largest_balanced_team(n, a):
+    a.sort()
+    start = 0
+    max_team_size = 0
+
+    for end in range(n):
+        while a[end] - a[start] > 5:
+            start += 1
+        max_team_size = max(max_team_size, end - start + 1)
+
+    return max_team_size
+
+
+n = int(input())
+a = list(map(int, input().split()))
+print(largest_balanced_team(n, a))
