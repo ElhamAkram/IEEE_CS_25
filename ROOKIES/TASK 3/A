@@ -1,0 +1,40 @@
+#A
+#Number of paris
+def find_pairs_with_sum_constraints(n, l, r, arr):
+    arr.sort()
+    total_pairs = 0
+
+    for i in range(n - 1):
+        left, right = i + 1, n - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if arr[i] + arr[mid] >= l:
+                right = mid - 1
+            else:
+                left = mid + 1
+        start_index = left
+
+        left, right = i + 1, n - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if arr[i] + arr[mid] <= r:
+                left = mid + 1
+            else:
+                right = mid - 1
+        end_index = right
+
+        if start_index <= end_index:
+            total_pairs += (end_index - start_index + 1)
+
+    return total_pairs
+
+
+test_cases = int(input())
+results = []
+
+for _ in range(test_cases):
+    n, l, r = map(int, input().split())
+    arr = list(map(int, input().split()))
+    results.append(find_pairs_with_sum_constraints(n, l, r, arr))
+
+print("\n".join(map(str, results)))
