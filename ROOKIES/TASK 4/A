@@ -1,0 +1,34 @@
+from collections import deque
+
+MOVES = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), 
+         (1, -2), (1, 2), (2, -1), (2, 1)]
+
+def knight_moves(start, destination):
+    def to_coords(pos):
+        return ord(pos[0]) - ord('a'), int(pos[1]) - 1
+
+    if start == destination:
+        return 0
+
+    start_x, start_y = to_coords(start)
+    dest_x, dest_y = to_coords(destination)
+
+    queue = deque([(start_x, start_y, 0)])
+    visited = set()
+    visited.add((start_x, start_y))
+
+    while queue:
+        x, y, moves = queue.popleft()
+
+        for dx, dy in MOVES:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < 8 and 0 <= ny < 8 and (nx, ny) not in visited:
+                if (nx, ny) == (dest_x, dest_y):
+                    return moves + 1
+                visited.add((nx, ny))
+                queue.append((nx, ny, moves + 1))
+
+T = int(input())
+for _ in range(T):
+    start, destination = input().split()
+    print(knight_moves(start, destination))
