@@ -1,0 +1,39 @@
+def find_components(n, adj):
+    visited = [False] * n
+    components = []
+    
+    def dfs(node, comp):
+        stack = [node]
+        visited[node] = True
+        while stack:
+            u = stack.pop()
+            comp.append(u + 1)
+            for v in adj[u]:
+                if not visited[v]:
+                    visited[v] = True
+                    stack.append(v)
+    
+    for i in range(n):
+        if not visited[i]:
+            comp = []
+            dfs(i, comp)
+            components.append(comp)
+    
+    return components
+
+n, m = map(int, input().split())
+adj = [[] for _ in range(n)]
+
+for _ in range(m):
+    a, b = map(int, input().split())
+    adj[a - 1].append(b - 1)
+    adj[b - 1].append(a - 1)
+
+components = find_components(n, adj)
+
+if len(components) == 1:
+    print(0)
+else:
+    print(len(components) - 1)
+    for i in range(1, len(components)):
+        print(components[0][0], components[i][0])
