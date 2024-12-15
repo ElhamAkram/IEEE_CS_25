@@ -1,0 +1,16 @@
+#A
+def min_difference(idx, group1_sum, total_sum, weights):
+    if idx == len(weights):
+        group2_sum = total_sum - group1_sum
+        return abs(group1_sum - group2_sum)
+    
+    take = min_difference(idx + 1, group1_sum + weights[idx], total_sum, weights)
+    skip = min_difference(idx + 1, group1_sum, total_sum, weights)
+    
+    return min(take, skip)
+
+n = int(input())
+weights = list(map(int, input().split()))
+total_sum = sum(weights)
+result = min_difference(0, 0, total_sum, weights)
+print(result)
