@@ -1,0 +1,26 @@
+#E
+def min_cost_to_satisfy_cows(N, M, cows, acs):
+    INF = float('inf')
+    dp = [INF] * (1 << N)
+    dp[0] = 0
+
+    for ac in acs:
+        a, b, p, m = ac
+        for mask in range((1 << N) - 1, -1, -1):
+            new_mask = mask
+            for i in range(N):
+                s, t, c = cows[i]
+                if a <= t and b >= s:
+                    if c > p:
+                        continue
+                    new_mask |= (1 << i)
+            dp[new_mask] = min(dp[new_mask], dp[mask] + m)
+
+    return dp[(1 << N) - 1]
+
+N, M = map(int, input().split())
+cows = [tuple(map(int, input().split())) for _ in range(N)]
+acs = [tuple(map(int, input().split())) for _ in range(M)]
+
+result = min_cost_to_satisfy_cows(N, M, cows, acs)
+print(result)
