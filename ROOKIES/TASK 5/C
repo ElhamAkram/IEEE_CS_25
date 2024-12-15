@@ -1,0 +1,20 @@
+#C
+def check_safe(board, r, c, placed_queens):
+    for pr, pc in placed_queens:
+        if pc == c or abs(pr - r) == abs(pc - c):
+            return False
+    return True
+
+def count_ways(board, row, placed_queens):
+    if row == 8:
+        return 1
+
+    total_ways = 0
+    for col in range(8):
+        if board[row][col] == '.' and check_safe(board, row, col, placed_queens):
+            total_ways += count_ways(board, row + 1, placed_queens + [(row, col)])
+    
+    return total_ways
+
+board = [input().strip() for _ in range(8)]
+print(count_ways(board, 0, []))
