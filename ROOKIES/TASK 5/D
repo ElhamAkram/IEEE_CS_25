@@ -1,0 +1,11 @@
+#D
+import itertools
+
+def get_permutations(s):
+    unique_permutations = sorted(set(itertools.permutations(s)))
+    print(len(unique_permutations))
+    for perm in unique_permutations:
+        print(''.join(perm))
+
+string = input().strip()
+get_permutations(string)
