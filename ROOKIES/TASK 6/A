@@ -1,0 +1,56 @@
+import sys
+
+sys.setrecursionlimit(10**6)
+
+def dfs(grid, i, j, n, m):
+    if i < 0 or i >= n or j < 0 or j >= m or grid[i][j] == 0:
+        return 0
+
+    volume = grid[i][j]
+    grid[i][j] = 0
+
+    volume += dfs(grid, i+1, j, n, m)
+    volume += dfs(grid, i-1, j, n, m)
+    volume += dfs(grid, i, j+1, n, m)
+    volume += dfs(grid, i, j-1, n, m)
+
+    return volume
+
+def largest_lake_volume(test_cases):
+    results = []
+    for case in test_cases:
+        n, m, grid = case
+        max_volume = 0
+
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] > 0:
+                    max_volume = max(max_volume, dfs(grid, i, j, n, m))
+
+        results.append(max_volume)
+    
+    return results
+
+def main():
+    input = sys.stdin.read
+    data = input().split()
+    
+    index = 0
+    t = int(data[index])
+    index += 1
+    test_cases = []
+    
+    for _ in range(t):
+        n, m = map(int, data[index:index+2])
+        index += 2
+        grid = []
+        for _ in range(n):
+            grid.append(list(map(int, data[index:index+m])))
+            index += m
+        test_cases.append((n, m, grid))
+    
+    results = largest_lake_volume(test_cases)
+    sys.stdout.write("\n".join(map(str, results)) + "\n")
+
+if _name_ == "_main_":
+    main()
