@@ -1,0 +1,32 @@
+import sys
+
+def dfs(node, adj, visited, cost_sum):
+    visited[node] = True
+    max_cost = 0
+    for neighbor, cost in adj[node]:
+        if not visited[neighbor]:
+            max_cost = max(max_cost, dfs(neighbor, adj, visited, cost_sum + cost))
+    visited[node] = False
+    return max_cost + cost_sum
+
+def find_max_travel_cost(n, edges):
+    adj = [[] for _ in range(n)]
+    for u, v, c in edges:
+        adj[u].append((v, c))
+        adj[v].append((u, c))
+    
+    visited = [False] * n
+    max_cost_from_0 = dfs(0, adj, visited, 0)
+    
+    visited = [False] * n
+    max_travel_cost = dfs(0, adj, visited, 0)
+
+    return max_travel_cost
+
+n = int(input())
+edges = []
+for _ in range(n - 1):
+    u, v, c = map(int, input().split())
+    edges.append((u, v, c))
+
+print(find_max_travel_cost(n, edges))
